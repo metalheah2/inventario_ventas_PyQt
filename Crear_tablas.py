@@ -1,15 +1,11 @@
 import sqlite3
 
-con=sqlite3.connect('base_inventario.db')
-cursor=con.cursor()
-
-def crear_tabla():
-	cursor.execute("CREATE TABLE IF NOT EXISTS ventas (producto TEXT,cantidad TEXT,unidades TEXT,precio_und TEXT,importe TEXT)")
-	con.commit()
-	cursor.execute("CREATE TABLE IF NOT EXISTS ventas_dia (vendedor TEXT,cliente TEXT,tipo_pago TEXT,fecha_venta TEXT,monto_total TEXT)")
-	con.commit()
-	cursor.cloese()
-	con.close()
-	print("Tablas_creadas")
+with sqlite3.connect('base_inventario.db') as conn:
+	def create_table():
+		conn.execute("CREATE TABLE IF NOT EXISTS inventario(codigo TEXT,producto TEXT ,laboratorio TEXT,cantidad TEXT,precio_und TEXT)")
+		conn.execute("CREATE TABLE IF NOT EXISTS ventas (producto TEXT,cantidad TEXT,unidades TEXT,precio_und TEXT,importe TEXT)")
+		conn.execute("CREATE TABLE IF NOT EXISTS ventas_dia (vendedor TEXT,cliente TEXT,tipo_pago TEXT,fecha_venta TEXT,monto_total TEXT)")
+		conn.commit()
+		print("Tablas_creadas")
 	
-crear_tabla
+create_table()
